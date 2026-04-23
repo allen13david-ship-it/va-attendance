@@ -342,6 +342,31 @@ document.getElementById("btnSubmit").addEventListener("click",()=>{
   setMessage("Attendance submitted successfully. You may close this page.", "success");
 });
 
+  <script>
+// Load VA Profiles from shared JSON file
+let vaProfiles = [];
+
+fetch("va-profiles.json")
+  .then(response => response.json())
+  .then(data => {
+      vaProfiles = data;
+      populateVAList();
+  })
+  .catch(err => console.error("Error loading VA list:", err));
+
+function populateVAList() {
+    const vaSelect = document.getElementById("vaSelect");
+    vaSelect.innerHTML = "";
+
+    vaProfiles.forEach(va => {
+        const option = document.createElement("option");
+        option.value = va.id;
+        option.textContent = `${va.id} — ${va.name} (${va.client})`;
+        vaSelect.appendChild(option);
+    });
+}
+</script>
+
 // INIT
 loadData();
 initVASelect();
